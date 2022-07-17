@@ -53,9 +53,7 @@ public class ConnectFour {
      * Checks if is there free space on the board
      */
     private boolean checkFullBoard(int counter) {
-        if (counter >= numberOfRows * numberOfColumns) {
-            return true;
-        } else return false;
+        return counter >= numberOfRows * numberOfColumns;
     }
 
     public boolean checkWinner(int row, int column) {

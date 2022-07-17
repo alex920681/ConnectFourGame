@@ -146,4 +146,14 @@ class ConnectFourTest {
         ConnectFour connectFour = new ConnectFour(new BoardBuilderTestImpl(board));
         assertEquals(-1 , connectFour.dropDisc(8, BoardValue.Red));
     }
+
+    @Test
+    void dropDisc4() {BoardValue[][] board = new BoardValue[2][2];
+        ConnectFour connectFour = new ConnectFour(new BoardBuilderTestImpl(board));
+        board[1][1] = BoardValue.Red;
+        board[1][0] = BoardValue.Red;
+        board[0][1] = BoardValue.Red;
+        board[0][0] = BoardValue.Red;
+        assertEquals(-1 , connectFour.dropDisc(1, BoardValue.Red));
+    }
 }
