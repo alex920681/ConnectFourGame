@@ -1,5 +1,8 @@
-package ConnectFour;
+package connectFour;
 
+/**
+ * Class with row and column number
+ * */
 public class Coordinates {
 private int row;
 private int column;

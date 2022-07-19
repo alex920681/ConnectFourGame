@@ -1,7 +1,0 @@
-package ConnectFour;
-
-public class Main {
-    public static void main(String[] args) {
-        new ConnectFour(new BoardBuilderImpl()).play();
-    }
-}

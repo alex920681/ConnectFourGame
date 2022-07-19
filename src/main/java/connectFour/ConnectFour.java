@@ -1,9 +1,25 @@
-package ConnectFour;
+package connectFour;
 
 
 import java.util.Scanner;
 import java.util.function.Function;
 
+/**
+ * Class with methods responsible for the main logic of the game :
+ * play()
+ * checkFullBoard(int counter)
+ * checkWinner(int row, int column)
+ * checkWinner(int row, int column)
+ * countSameDisc(int row, int column, Function<Coordinates, Coordinates> getNextCoordinates)
+ * isCoordinatesValid(int row, int column)
+ * checkHorizontalWinner(int row, int column)
+ * checkVerticalWinner(int row, int column)
+ * checkDiagonalDescWinner(int row, int column)
+ * checkDiagonalAscWinner(int row, int column)
+ * printBoard()
+ * askPlayerForNewDisc(BoardValue disc)
+ * dropDisc(int column, BoardValue disc)
+ */
 public class ConnectFour {
 
     private final BoardValue[][] board;
@@ -21,7 +37,7 @@ public class ConnectFour {
      * Entry point of the game
      */
     public void play() {
-        BoardValue activePlayer = BoardValue.Red;
+        BoardValue activePlayer = BoardValue.RED;
         int counterOfFilling = 0;
         boolean continueGame = true;
 
@@ -37,7 +53,7 @@ public class ConnectFour {
 
             boolean isWinner = checkWinner(newCoordinates.getRow(), newCoordinates.getColumn());
             if (isWinner) {
-                if (activePlayer == BoardValue.Red) {
+                if (activePlayer == BoardValue.RED) {
                     System.out.println("Player 1 [RED] wins!");
                 } else System.out.println("Player 2 [GREEN] wins!");
                 continueGame = false;
@@ -45,7 +61,7 @@ public class ConnectFour {
                 System.out.println("The board is full, Draw!");
                 continueGame = false;
             }
-            activePlayer = (activePlayer == BoardValue.Red) ? BoardValue.Green : BoardValue.Red;
+            activePlayer = (activePlayer == BoardValue.RED) ? BoardValue.GREEN : BoardValue.RED;
         }
     }
 
@@ -56,6 +72,9 @@ public class ConnectFour {
         return counter >= numberOfRows * numberOfColumns;
     }
 
+    /**
+     * Check if there is a winner
+     */
     public boolean checkWinner(int row, int column) {
         return checkHorizontalWinner(row, column) || checkVerticalWinner(row, column) ||
                 checkDiagonalAscWinner(row, column) || checkDiagonalDescWinner(row, column);
@@ -83,6 +102,9 @@ public class ConnectFour {
         return counter;
     }
 
+    /**
+     * Checking that the coordinate does not go beyond the board
+     */
     public boolean isCoordinatesValid(int row, int column) {
         if ((row < 0 || row >= numberOfRows) || (column < 0 || column >= numberOfColumns)) {
             return false;
@@ -131,13 +153,16 @@ public class ConnectFour {
         return counter >= conditionOfWin;
     }
 
+    /**
+     * Game board printing
+     */
     private void printBoard() {
         for (int i = 0; i < numberOfRows; i++) {
             for (int j = 0; j < numberOfColumns; j++) {
-                if (board[i][j] == BoardValue.Red) {
+                if (board[i][j] == BoardValue.RED) {
                     System.out.print("|R");
                 }
-                if (board[i][j] == BoardValue.Green) {
+                if (board[i][j] == BoardValue.GREEN) {
                     System.out.print("|G");
                 }
                 if (board[i][j] == null) {
@@ -151,16 +176,18 @@ public class ConnectFour {
     }
 
     /**
+     * Request in which column the player wants to put the disc
+     * and re-request if it was not possible to put the disk
      * @param disc Color of the current Player
      */
     private Coordinates askPlayerForNewDisc(BoardValue disc) {
         int row;
         int numOfColumn;
         String message;
-        if (disc == BoardValue.Red)
-            message = "Player 1 [Red] choose column (1-" + numberOfColumns + "): ";
+        if (disc == BoardValue.RED)
+            message = "Player 1 [RED] choose column (1-" + numberOfColumns + "): ";
         else
-            message = "Player 2 [Green] choose column (1-" + numberOfColumns + "): ";
+            message = "Player 2 [GREEN] choose column (1-" + numberOfColumns + "): ";
 
         do {
             System.out.print(message);
@@ -175,6 +202,9 @@ public class ConnectFour {
         return new Coordinates(row, numOfColumn);
     }
 
+    /**
+     * Throws the disk and returns the line number. If it didn't work, it returns -1
+     */
     public int dropDisc(int column, BoardValue disc) {
         if (column + 1 > numberOfColumns || column < 0 || board[0][column] != null) {
             return -1;
